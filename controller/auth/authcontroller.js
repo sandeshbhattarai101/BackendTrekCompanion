@@ -1,6 +1,8 @@
 const User = require("../../model/userModel")
 const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const sendEmail = require("../../services/sendEmail");
+
 exports.registerUser = async (req, res)=>{
 
     const {email, username, password} = req.body
@@ -55,13 +57,14 @@ exports.registerUser = async (req, res)=>{
   const isMatched = bcrypt.compareSync(password, userFound[0].password)
   
   if(isMatched){
-  //GENETRATE TOKEN
-//   const token = jwt.sign({id : userFound[0]._id},process.env.SECRET_KEY,{
-//   expiresIn : '30d'
-//   })
+  // GENETRATE TOKEN
+  const token = jwt.sign({id : userFound[0]._id},process.env.SECRET_KEY,{
+  expiresIn : '30d'
+  })
   
     res.status(200).json({
-      message : " User logged in successfully"
+      message : " User logged in successfully",
+      token 
     })
   }else{
     res.status(404).json({
@@ -69,4 +72,121 @@ exports.registerUser = async (req, res)=>{
     })
   }
   
+  }
+
+
+  // FORGOT PASSWORD
+  exports.forgotPassword = async (req, res)=>{
+
+    const {email} = req.body
+
+    // if(!email){
+    //   return res.status(400).json({
+    //     message :"Please provide email"
+    //   })
+    // }
+ 
+    // check if that email is registered or not
+    const userExist = await User.find({email : email})
+    if(userExist.length == 0){
+      return res.status(400).json({
+        message : "Email is not registered"
+      })
+    }
+
+    // SEND OTP TO THAT EMAIL
+
+    const otp = Math.floor(1000 + Math.random()* 9000);
+    userExist[0].otp = otp
+    await userExist[0].save()
+
+    sendEmail({
+      email : email,
+      subject : "Your Otp For TrekCompanion Forgot Password",
+      message : `Your otp is ${otp} . Don't share this with anyone.`
+    })
+   res.status(200).json({
+    message: "OTP sent successfully"
+   })
+
+  }
+
+
+  // VERIFY OTP
+
+  exports.verifyOtp = async ( req, res)=>{
+    const{email, otp } = req.body
+
+    if(!email || !otp){
+      return res.status(400).json({
+        message : " Please provide email , otp"
+      })
+    }
+
+    // CHECK IF OTP IS CORRECT OR NOT OF THAT EMAIL
+
+     userExists =  await User.find({email : email})
+    if(userExists.length == 0 ){
+      return res.status(404).json({
+        message : "Email is not registered"
+      })
+    }
+  
+  // form le value object string ma dinxa tesaile hamle garnu parxa Number type  ma change garnu parxa ie Number(otp)
+
+    if(userExists[0].otp !== (Number(otp))){
+      return res.status(400).json({
+        message : "Invalid Otp"
+      })
+    }else{
+      //DISPOSE THE OTP SO SAME OTP CANNOT BE USED AGAIN  
+      userExists[0].otp = undefined
+      userExists[0].isOtpVerified = true;
+      await userExists[0].save()
+
+      res.status(200).json({
+        message : "Otp is correct"
+      })
+    }
+
+
+  }
+
+
+  exports.resetPassword = async ( req, res)=>{
+    const {email, newPassword, confirmPassword} = req.body
+    if(!email || !newPassword || !confirmPassword){
+      return res.status(400).json({
+        message : "Please provide email, newPassword, confirmPassword"
+      })
+    }
+    if(newPassword !== confirmPassword){
+      return res.status(400).json({
+        message : "newPassword and confirmPassword does not match"
+      })
+    }
+    
+    const userExists =  await User.find({email : email})
+    if(userExists.length == 0 ){
+      return res.status(404).json({
+       message : "Email is not registered"
+      })
+    }
+
+    if(userExists[0].isOtpVerified !== true){
+      return res.status.json(403).json({
+        message : "You cannot perform this action"
+      })
+
+    }
+
+    userExists[0].password = bcrypt.hashSync(newPassword,8)
+    userExists[0].isOtpVerified = false;
+    await userExists[0].save()
+
+    res.status(200).json({
+      
+      message : "Password changed successfully"
+    })
+    
   }
