@@ -5,9 +5,11 @@ const cors = require("cors")
 
 //   ROUTES HERE
 const authRoute = require("./routes/authRoute")
+const destinationRoute = require("./routes/destinationRoute")
 
 
 // ROUTES END HERE
+
 
 // TELL NODE TO USE DOTENV
 require("dotenv").config()
@@ -26,6 +28,7 @@ connectDatabase()
 
 
 app.use("",authRoute)
+app.use("",destinationRoute)
 
 const PORT = process.env.PORT
 

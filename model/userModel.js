@@ -4,7 +4,8 @@ const mongoose = require ("mongoose")
 const userSchema = new mongoose.Schema({
     email:{
         type : String,
-        required : [true,"userEmail must be provided"]
+        required : [true,"userEmail must be provided"],
+    //    unique : true  //unique huna parxa vanera define gareko
 
     }, 
 
@@ -14,6 +15,11 @@ const userSchema = new mongoose.Schema({
 
     password : {
         type : String,
+    },
+    role : {
+        type : String,
+        enum : ["customer", "admin"],
+        default : "customer"
     },
 
     otp : {
