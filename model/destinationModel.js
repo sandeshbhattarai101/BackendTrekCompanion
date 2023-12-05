@@ -27,7 +27,7 @@ const mongoose = require("mongoose")
     }, 
     destinationStatus :{
         type : String,
-        enum : ["published"," unpublished"]
+        enum : ["published","unpublished"]
     }
  
 },{
