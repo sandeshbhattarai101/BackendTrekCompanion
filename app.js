@@ -6,6 +6,7 @@ const cors = require("cors")
 //   ROUTES HERE
 const authRoute = require("./routes/authRoute")
 const destinationRoute = require("./routes/destinationRoute")
+const helpRoute = require("./routes/helpRoute")
 
 
 // ROUTES END HERE
@@ -29,6 +30,7 @@ connectDatabase()
 
 app.use("",authRoute)
 app.use("",destinationRoute)
+app.use("",helpRoute)
 
 const PORT = process.env.PORT
 
