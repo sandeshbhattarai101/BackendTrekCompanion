@@ -58,7 +58,7 @@ exports.registerUser = async (req, res)=>{
   
   if(isMatched){
   // GENETRATE TOKEN
-  const token = jwt.sign({id : userFound[0]._id},process.env.SECRET_KEY,{
+  const token = jwt.sign({id : userFound[0]._id}, process.env.SECRET_KEY,{
   expiresIn : '30d'
   })
   
