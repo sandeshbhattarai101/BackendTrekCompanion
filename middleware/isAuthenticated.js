@@ -3,9 +3,10 @@ const promisify = require("util").promisify
 const User = require("../model/userModel")
 
 const isAuthenticated = async (req, res, next)=>{
-    const token = req.headers.authorization   //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
+    const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
+    // const token = req.cookies.token  //browser ma vako token linxa
     if(!token){
-        res.status(400).json({
+      return  res.status(400).json({ //else vaena vane return halna birisnu hunna
             message : "Please login"
         })
     }

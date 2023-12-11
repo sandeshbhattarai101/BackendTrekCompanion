@@ -1,7 +1,15 @@
 const Destination = require("../../../model/destinationModel")
 
 
-exports.createDestination =async (req, res)=>{
+exports.createDestination = async (req, res)=>{
+
+    const file = req.file
+    let filePath;
+    if(!file){
+        filePath = "https://www.pexels.com/photo/man-walking-on-trail-1392099/"  //file  aayena vane default image 
+    }else{
+        filePath = req.file.filename
+    }
     const {destinationName, destinationDescription, destinationCost, completionTime, tripGrade, maxAltitude, destinationStatus } = req.body
 if(!destinationName || !destinationDescription || !destinationCost || !completionTime || !tripGrade || !maxAltitude || !destinationStatus ){
     return res.status(400).json({
@@ -13,6 +21,7 @@ if(!destinationName || !destinationDescription || !destinationCost || !completio
 
 await Destination.create({
     destinationName ,
+    destinationImage :"http://localhost:3000/" + filePath, //local host hale paxi frontend ma link imga ko src ma concat garna paren
     destinationDescription ,
     destinationCost ,
     completionTime ,

@@ -1,16 +1,22 @@
 const mongoose = require("mongoose")
 
  const destinationSchema = new mongoose.Schema({
+
     destinationName : {
         type : String,
         required : [true,"destinationName must be provided"]
+    },
+
+    destinationImage :{
+        type : String
+
     },
     destinationDescription : {
         type : String,
         required : [true,"destinationDescription must be provided"]
     },
     destinationCost : {
-        type : Number,
+        type : String,
         required : [true,"destinationCost must be provided"]
     },
     completionTime : {
@@ -29,6 +35,7 @@ const mongoose = require("mongoose")
         type : String,
         enum : ["published","unpublished"]
     }
+
  
 },{
     timestamps : true
