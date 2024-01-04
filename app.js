@@ -1,5 +1,9 @@
 const express = require("express")
 const app = express();
+
+// TELL NODE TO USE DOTENV
+require("dotenv").config()
+
 const { connectDatabase } = require("./database/database")
 const cors = require("cors")
 const cookieParser = require('cookie-parser')
@@ -8,13 +12,14 @@ const cookieParser = require('cookie-parser')
 const authRoute = require("./routes/authRoute")
 const destinationRoute = require("./routes/destinationRoute")
 const helpRoute = require("./routes/helpRoute")
+const adminUsersRoute = require("./routes/adminUsersRoute")
+const profileRoute = require("./routes/profileRoute")
+const userReviewRoute = require("./routes/userReviewRoute")
 
 
 // ROUTES END HERE
 
 
-// TELL NODE TO USE DOTENV
-require("dotenv").config()
 
 app.use(cors({
   origin : "http://localhost:5173"
@@ -39,6 +44,9 @@ app.use(express.static("./uploads/"))
 app.use("",authRoute)
 app.use("",destinationRoute)
 app.use("",helpRoute)
+app.use("",adminUsersRoute)
+// app.use("",profileRoute)
+app.use("",userReviewRoute)
 
 const PORT = process.env.PORT
 

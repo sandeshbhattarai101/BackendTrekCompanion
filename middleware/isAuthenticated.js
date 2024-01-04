@@ -4,7 +4,9 @@ const User = require("../model/userModel")
 
 const isAuthenticated = async (req, res, next)=>{
     const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
-    // const token = req.cookies.token  //browser ma vako token linxa
+    // const token = req.cookies.token      //browser ma vako token linxa
+
+
     if(!token){
       return  res.status(400).json({ //else vaena vane return halna birisnu hunna
             message : "Please login"
@@ -29,7 +31,7 @@ const isAuthenticated = async (req, res, next)=>{
     // ALTERNATIVE
     try {
         const decoded = await promisify(jwt.verify)(token, process.env.SECRET_KEY)
-       
+       console.log(decoded)
         //check if decoded.id(userId) exists in user Table
 
         const doesUserExist = await User.findOne({_id : decoded.id})
@@ -38,7 +40,6 @@ const isAuthenticated = async (req, res, next)=>{
                 message : "User doesn't exists with that token id"
             })
         }
-        console.log(doesUserExist)
         
         req.user = doesUserExist  //yo req.user ko value chai hamle yo middleware jun ma use garexam tesko ma access garnu pauxam next le garda
         
@@ -46,8 +47,8 @@ const isAuthenticated = async (req, res, next)=>{
 
     } catch (error) {
         
-        res.status(400).json({
-            message : "Don't try to do this"
+        res.status(500).json({
+            message : error.message
         })
     }
 

@@ -1,10 +1,10 @@
-const mongoose = require ("mongoose")
+const mongoose = require ("mongoose");
 
 
-const userSchema = new mongoose.Schema({
+const guideSchema = new mongoose.Schema({
     email:{
         type : String,
-        required : [true,"userEmail must be provided"],
+        required : [true,"Email must be provided"],
     //    unique : true  //unique huna parxa vanera define gareko
 
     }, 
@@ -17,15 +17,14 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : [true,"Password must be provided"],
         minlength : 8,
-       
+        select : false //bydefault response data ma nadekhaune
     },
     role : {
         type : String,
-        enum : ["tourist","admin"],
-        default : "tourist",
+        enum : ["guide"],
+        default : "guide",
        
     },
-
     otp : {
         type : Number,
         
@@ -39,5 +38,5 @@ const userSchema = new mongoose.Schema({
 
 })
 
-const User = mongoose.model("User" , userSchema )
-module.exports = User;
+const Guide = mongoose.model("Guide" , guideSchema )
+module.exports = Guide;

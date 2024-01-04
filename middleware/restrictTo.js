@@ -6,7 +6,7 @@ const restrictTo = (...roles)=>{
     return (req, res, next)=>{
        const userRole = req.user.role  //req.user vitra ko role ko value pass garyo userRole ma 
        if(!roles.includes(userRole)){   //restrictTo("admin") i.e ...roles pass garexam so userRole admin vaye matra next hunxa 
-                res.status(403).jsom({
+                res.status(403).json({
             message : "You don't have permission for this. Forbidden"
         })
        }else{
