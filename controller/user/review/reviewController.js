@@ -75,20 +75,20 @@
 
  }
 
- exports.addGuideReview = async(req,res)=>{
-     const guideId = req.params.id 
-     const {rating,message} = req.body 
-     const userId = req.user.id 
-     const review = {
-         userId , 
-         rating,
-         message,
+//  exports.addGuideReview = async(req,res)=>{
+//      const guideId = req.params.id 
+//      const {rating,message} = req.body 
+//      const userId = req.user.id 
+//      const review = {
+//          userId , 
+//          rating,
+//          message,
 
-     }
-     const guide = await Guide.findById(guideId)
-     guide.reviews.push(review) 
-     await guide.save() 
-     res.json({
-         message : "Review done"
-     })
- }
+//      }
+//      const guide = await Guide.findById(guideId)
+//      guide.reviews.push(review) 
+//      await guide.save() 
+//      res.json({
+//          message : "Review done"
+//      })
+//  }

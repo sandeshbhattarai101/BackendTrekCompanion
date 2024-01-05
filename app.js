@@ -10,10 +10,13 @@ const cookieParser = require('cookie-parser')
 
 //   ROUTES HERE
 const authRoute = require("./routes/authRoute")
+const guideAuthRoute = require("./routes/guideAuthRoute")
+const guideRoute = require("./routes/guideRoute")
 const destinationRoute = require("./routes/destinationRoute")
 const helpRoute = require("./routes/helpRoute")
 const adminUsersRoute = require("./routes/adminUsersRoute")
-const profileRoute = require("./routes/profileRoute")
+const userProfileRoute = require("./routes/userProfileRoute")
+const guideProfileRoute = require("./routes/guideProfileRoute")
 const userReviewRoute = require("./routes/userReviewRoute")
 
 
@@ -42,10 +45,13 @@ app.use(express.static("./uploads/"))
 
 
 app.use("",authRoute)
+app.use("",guideAuthRoute)
+app.use("",guideRoute)
 app.use("",destinationRoute)
 app.use("",helpRoute)
 app.use("",adminUsersRoute)
-// app.use("",profileRoute)
+app.use("",userProfileRoute)
+app.use("",guideProfileRoute)
 app.use("",userReviewRoute)
 
 const PORT = process.env.PORT

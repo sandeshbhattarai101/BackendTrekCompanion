@@ -78,6 +78,8 @@ exports.registerGuide = async (req, res)=>{
   }
 
 
+
+
   // FORGOT PASSWORD
   exports.forgotPassword = async (req, res)=>{
 

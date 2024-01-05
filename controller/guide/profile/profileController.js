@@ -1,12 +1,12 @@
-const User = require("../../../model/userModel")
+const Guide = require("../../../model/guideModel")
 const bcrypt = require("bcryptjs")
 
 
 
 // get my profile controller 
 exports.getMyProfile = async(req,res)=>{
-    const userId = req.user.id 
-    const myProfile = await User.findById(userId)
+    const guideId = req.guide.id 
+    const myProfile = await Guide.findById(guideId)
     // send response
     res.status(200).json({
         data : myProfile,
@@ -18,10 +18,10 @@ exports.getMyProfile = async(req,res)=>{
 
 // update my profile controller 
 exports.updateMyProfile = async(req,res)=>{
-    const {userName,userEmail,userPhoneNumber} = req.body 
-    const userId = req.user.id 
+    const {userName, email} = req.body 
+    const guideId = req.guide.id 
     // update profile 
-  const updatedData =   await User.findByIdAndUpdate(userId,{userName,userEmail,userPhoneNumber},{
+  const updatedData =   await Guide.findByIdAndUpdate(guideId,{userName,email},{
         runValidators : true,
         new : true 
     })
@@ -34,8 +34,8 @@ exports.updateMyProfile = async(req,res)=>{
 
 // delete my profile 
 exports.deleteMyProfile = async(req,res)=>{
-    const userId = req.user.id ; 
-    await User.findByIdAndDelete(userId)
+    const guideId = req.guide.id ; 
+    await Guide.findByIdAndDelete(guideId)
     res.status(200).json({
         message : "Profile delete successfully",
         data : null
@@ -44,7 +44,7 @@ exports.deleteMyProfile = async(req,res)=>{
 
 // update my password 
 exports.updateMyPassword = async(req,res)=>{
-    const userId = req.user.id 
+    const guideId = req.guide.id 
     const {oldPassword,newPassword,confirmPassword} = req.body 
     if(!oldPassword || !newPassword || !confirmPassword){
         return res.status(400).json({
@@ -58,8 +58,8 @@ exports.updateMyPassword = async(req,res)=>{
 
     }
     // taking out the hash of the old password 
-    const userData = await User.findById(userId)
-    const hashedOldPassword  = userData.userPassword 
+    const guideData = await Guide.findById(guideId)
+    const hashedOldPassword  = guideData.password 
 
 
     // check if oldPassword is correct or not
@@ -70,8 +70,8 @@ exports.updateMyPassword = async(req,res)=>{
         })
     }
     // matched vayo vaney 
-    userData.userPassword= bcrypt.hashSync(newPassword,12)
-    await userData.save()
+    guideData.password= bcrypt.hashSync(newPassword,12)
+    await guideData.save()
     res.status(200).json({
         message  : "Password Changed successfully",
         
