@@ -18,10 +18,10 @@ exports.getMyProfile = async(req,res)=>{
 
 // update my profile controller 
 exports.updateMyProfile = async(req,res)=>{
-    const {userName,userEmail,userPhoneNumber} = req.body 
+    const {userName,Email} = req.body 
     const userId = req.user.id 
     // update profile 
-  const updatedData =   await User.findByIdAndUpdate(userId,{userName,userEmail,userPhoneNumber},{
+  const updatedData =   await User.findByIdAndUpdate(userId,{userName,email},{
         runValidators : true,
         new : true 
     })
@@ -59,7 +59,7 @@ exports.updateMyPassword = async(req,res)=>{
     }
     // taking out the hash of the old password 
     const userData = await User.findById(userId)
-    const hashedOldPassword  = userData.userPassword 
+    const hashedOldPassword  = userData.password 
 
 
     // check if oldPassword is correct or not
@@ -70,7 +70,7 @@ exports.updateMyPassword = async(req,res)=>{
         })
     }
     // matched vayo vaney 
-    userData.userPassword= bcrypt.hashSync(newPassword,12)
+    userData.password= bcrypt.hashSync(newPassword,12)
     await userData.save()
     res.status(200).json({
         message  : "Password Changed successfully",
