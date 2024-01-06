@@ -18,7 +18,7 @@ exports.getMyProfile = async(req,res)=>{
 
 // update my profile controller 
 exports.updateMyProfile = async(req,res)=>{
-    const {userName,Email} = req.body 
+    const {userName,email} = req.body 
     const userId = req.user.id 
     // update profile 
   const updatedData =   await User.findByIdAndUpdate(userId,{userName,email},{
