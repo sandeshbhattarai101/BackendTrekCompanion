@@ -63,11 +63,13 @@ exports.registerUser = async (req, res)=>{
   expiresIn : '30d'
   })
   
-  res.cookie('token',token) // browser ma application tab vitra cookie vanney ma save hunchha
+  res.cookie('token', token,{
+    httpOnly : true,
+  }); // browser ma application tab vitra cookie vanney ma save hunchha
   
     res.status(200).json({
       message : " User logged in successfully",
-      token 
+      // token 
     })
   }else{
     res.status(404).json({

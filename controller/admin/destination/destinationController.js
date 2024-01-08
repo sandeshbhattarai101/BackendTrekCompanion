@@ -5,9 +5,10 @@ const fs = require("fs")
 exports.createDestination = async (req, res)=>{
 
     const file = req.file
+    console.log(file)
     let filePath;
     if(!file){
-        filePath = "https://www.pexels.com/photo/man-walking-on-trail-1392099/"  //file  aayena vane default image 
+        filePath = "1702307901323-mountain1.jpg"  //file  aayena vane default image 
     }else{
         filePath = req.file.filename
     }
@@ -49,7 +50,7 @@ if (destinations.length == 0){
 }else{
     res.status(200).json({
         message: "Destinations Fetched Successfully",
-        data: destinations
+        data : destinations
     })
 }
 
@@ -66,7 +67,7 @@ exports.getDestination = async(req, res)=>{
 
 }
 const destination  = await Destination.find({_id : id})
-if(destiation.length == 0){
+if(destination.length == 0){
     res.status(400).json({
         message : "No destination found with that id ",
         destination : []
@@ -86,6 +87,12 @@ exports.deleteDestination = async(req,res)=>{
     if(!id){
         return res.status(400).json({
             message : "Please provide id"
+        })
+    }
+    const oldData = await Destination.findById(id)
+    if(!oldData){
+        return res.status(404).json({
+            message : "No data found with that id"
         })
     }
     const oldDestinationImage = oldData.destinationImage

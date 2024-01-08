@@ -4,8 +4,8 @@ const User = require("../model/userModel")
 const Guide = require("../model/guideModel")
 
 const isAuthenticated = async (req, res, next)=>{
-    const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
-    // const token = req.cookies.token      //browser ma vako token linxa
+    // const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
+    const token = req.cookies.token      //browser ma vako token linxa
 
 
     if(!token){

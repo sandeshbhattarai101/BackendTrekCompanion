@@ -1,7 +1,7 @@
 const mongoose = require ("mongoose")
 
 
-const adminSchema = new mongoose.Schema({
+const helpSchema = new mongoose.Schema({
     name:{
         type : String,
    
@@ -21,5 +21,5 @@ const adminSchema = new mongoose.Schema({
 
 })
 
-const Admin = mongoose.model("Admin" , adminSchema)
-module.exports = Admin;
+const Help = mongoose.model("Help" , helpSchema)
+module.exports = Help;

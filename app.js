@@ -8,6 +8,12 @@ const { connectDatabase } = require("./database/database")
 const cors = require("cors")
 const cookieParser = require('cookie-parser')
 
+// Node lai socket.io use garna Server Class banako
+const {Server} = require("socket.io")
+
+// require express-session and connect-flash
+const flash = require("connect-flash")
+
 //   ROUTES HERE
 const authRoute = require("./routes/authRoute")
 const guideAuthRoute = require("./routes/guideAuthRoute")
@@ -25,15 +31,25 @@ const userReviewRoute = require("./routes/userReviewRoute")
 // ROUTES END HERE
 
 
+const corsOptions = {
+  origin : "http://localhost:5173",
+  credentials: true,
+ 
+};
 
-app.use(cors({
-  origin : "http://localhost:5173"
-}
-))
+app.use(cors(corsOptions));
+
 
 
 //DATABASE CONNECTION FUNCTION FROM database.js
 connectDatabase()
+
+
+
+
+
+app.use(flash())
+
 
 
 app.use(cookieParser()) //token lai browser ma save ra browser bata lina help garxa
@@ -60,6 +76,12 @@ app.use("",userReviewRoute)
 
 const PORT = process.env.PORT
 
-app.listen(PORT,(res, req )=>{
+ const server = app.listen(PORT,(res, req )=>{
   console.log(`Server has started at port ${PORT}`)
+})
+
+const io = new Server(server)
+
+io.on("connection",(socket)=>{
+  
 })

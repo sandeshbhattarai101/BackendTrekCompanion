@@ -1,4 +1,4 @@
-const Help = require("../../../model/adminModel")
+const Help = require("../../../model/helpModel")
 
 exports.createHelp = async(req,res)=>{
     const{name,email,mobileNo,message} = req.body;
