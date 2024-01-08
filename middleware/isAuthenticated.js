@@ -34,8 +34,7 @@ const isAuthenticated = async (req, res, next)=>{
         //check if decoded.id(userId) exists in user Table
         
         const doesUserExist = await User.findOne({_id : decoded.id})
-        const doesGuideExist = await Guide.findOne({_id : decoded.id})
-        if(doesUserExist || doesGuideExist){
+        if(doesUserExist){
           
             
             req.user = doesUserExist  //yo req.user ko value chai hamle yo middleware jun ma use garexam tesko ma access garnu pauxam next le garda
