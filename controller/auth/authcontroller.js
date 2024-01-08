@@ -5,7 +5,7 @@ const sendEmail = require("../../services/sendEmail");
 
 exports.registerUser = async (req, res)=>{
 
-    const {email, username, password} = req.body
+    const {email, username, password,role} = req.body
   
     //check if email user already exist or not 
     const userFound= await User.find({
@@ -24,7 +24,8 @@ exports.registerUser = async (req, res)=>{
   await User.create({
     email : email,
     username : username,
-    password : bcrypt.hashSync(password,8)
+    password : bcrypt.hashSync(password,8),
+    role : role,
   })
   res.status(201).json({
     message : "account created successfully"
@@ -69,7 +70,7 @@ exports.registerUser = async (req, res)=>{
   
     res.status(200).json({
       message : " User logged in successfully",
-      // token 
+       token 
     })
   }else{
     res.status(404).json({

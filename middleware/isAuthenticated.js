@@ -1,13 +1,10 @@
 const  jwt = require("jsonwebtoken")
 const promisify = require("util").promisify
 const User = require("../model/userModel")
-const Guide = require("../model/guideModel")
 
 const isAuthenticated = async (req, res, next)=>{
-    // const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
-    const token = req.cookies.token    
-    console.log(token) 
-     //browser ma vako token linxa
+   const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
+    // const token = req.cookies.token      //browser ma vako token linxa
 
 
     if(!token){
@@ -38,12 +35,10 @@ const isAuthenticated = async (req, res, next)=>{
         
         const doesUserExist = await User.findOne({_id : decoded.id})
         const doesGuideExist = await Guide.findOne({_id : decoded.id})
-        console.log(doesUserExist)
         if(doesUserExist || doesGuideExist){
           
             
             req.user = doesUserExist  //yo req.user ko value chai hamle yo middleware jun ma use garexam tesko ma access garnu pauxam next le garda
-            req.guide = doesGuideExist
             next() // middle user jaha use hunxa tespaxi ko function haru ma access garna dinxa
         }else{
             return res.status(400).json({

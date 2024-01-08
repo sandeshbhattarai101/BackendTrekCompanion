@@ -21,9 +21,7 @@ const userSchema = new mongoose.Schema({
     },
     role : {
         type : String,
-        enum : ["tourist","admin"],
-        default : "tourist",
-       
+        enum : ["tourist","guide","admin"]  
     },
 
     otp : {
@@ -37,6 +35,8 @@ const userSchema = new mongoose.Schema({
         
     }
 
+},{
+    timestamps: true
 })
 
 const User = mongoose.model("User" , userSchema )

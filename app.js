@@ -16,15 +16,16 @@ const flash = require("connect-flash")
 
 //   ROUTES HERE
 const authRoute = require("./routes/authRoute")
-const guideAuthRoute = require("./routes/guideAuthRoute")
-const guideRoute = require("./routes/guideRoute")
+// const guideAuthRoute = require("./routes/guideAuthRoute")
+// const guideRoute = require("./routes/guideRoute")
+const chatRoute = require("./routes/chatRoute")
 const destinationRoute = require("./routes/destinationRoute")
 const helpRoute = require("./routes/helpRoute")
 const paymentRoute = require("./routes/paymentRoute")
 const orderRoute = require("./routes/orderRoute")
 const adminUsersRoute = require("./routes/adminUsersRoute")
 const userProfileRoute = require("./routes/userProfileRoute")
-const guideProfileRoute = require("./routes/guideProfileRoute")
+// const guideProfileRoute = require("./routes/guideProfileRoute")
 const userReviewRoute = require("./routes/userReviewRoute")
 
 
@@ -63,15 +64,13 @@ app.use(express.static("./uploads/"))
 
 
 app.use("",authRoute)
-app.use("",guideAuthRoute)
-app.use("",guideRoute)
+app.use("",chatRoute)
 app.use("",destinationRoute)
 app.use("",helpRoute)
 app.use("",orderRoute)
 app.use("",paymentRoute)
 app.use("",adminUsersRoute)
 app.use("",userProfileRoute)
-app.use("",guideProfileRoute)
 app.use("",userReviewRoute)
 
 const PORT = process.env.PORT
