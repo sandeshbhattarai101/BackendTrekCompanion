@@ -1,16 +1,12 @@
 const mongoose = require('mongoose')
 
-const chatModel = mongoose.Schema(
-    {
+const chatModel = new mongoose.Schema({
         chatName :{ type: String , trim:true},
-        user: {
-            type : mongoose.Schema.Types.ObjectId,
-            ref:"User"
+        users:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
         },
-        guide : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref:"Guide"
-        },
+    ],
         latestMessage : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Message"

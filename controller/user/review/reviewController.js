@@ -1,5 +1,5 @@
- const Guide = require("../../../model/guideModel")
  const Review = require("../../../model/reviewModel")
+const User = require("../../../model/userModel")
 
 
  exports.createReview = async(req,res)=>{
@@ -13,7 +13,7 @@
          })
      }
      // check if that productId product exists or not
-     const guideExist = await Guide.findById(guideId)
+     const guideExist = await User.findById(guideId)
      if(!guideExist){
          return res.status(404).json({
              message : 'Guide with that guideId doesnot exist'

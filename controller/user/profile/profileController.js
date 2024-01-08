@@ -77,3 +77,22 @@ exports.updateMyPassword = async(req,res)=>{
         
     })
 }
+
+
+
+
+
+// get all guides
+
+exports.allGuides = async(req, res)=>{
+    const keyword = req.query.search ? {
+        $or:[
+            { username :{ $regex: req.query.search, $options: 'i'}},
+            { email :{ $regex: req.query.search, $options: 'i'}},
+
+        ]
+    } : {};
+
+    const guides = await Guide.find(keyword);
+    res.send(guides);
+}
