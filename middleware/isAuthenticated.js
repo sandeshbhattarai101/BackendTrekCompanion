@@ -5,7 +5,9 @@ const Guide = require("../model/guideModel")
 
 const isAuthenticated = async (req, res, next)=>{
     // const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
-    const token = req.cookies.token      //browser ma vako token linxa
+    const token = req.cookies.token    
+    console.log(token) 
+     //browser ma vako token linxa
 
 
     if(!token){
@@ -32,11 +34,11 @@ const isAuthenticated = async (req, res, next)=>{
     // ALTERNATIVE
     try {
         const decoded = await promisify(jwt.verify)(token, process.env.SECRET_KEY)
-       console.log(decoded)
         //check if decoded.id(userId) exists in user Table
-
+        
         const doesUserExist = await User.findOne({_id : decoded.id})
         const doesGuideExist = await Guide.findOne({_id : decoded.id})
+        console.log(doesUserExist)
         if(doesUserExist || doesGuideExist){
           
             
