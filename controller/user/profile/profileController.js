@@ -7,6 +7,9 @@ const bcrypt = require("bcryptjs")
 exports.getMyProfile = async(req,res)=>{
     const userId = req.user.id 
     const myProfile = await User.findById(userId)
+
+    
+    console.log(myProfile)
     // send response
     res.status(200).json({
         data : myProfile,
@@ -20,12 +23,13 @@ exports.getMyProfile = async(req,res)=>{
 exports.updateMyProfile = async(req,res)=>{
     const {userName,email,rate} = req.body 
     const userId = req.user.id 
+    console.log(userId)
     // update profile 
   const updatedData =   await User.findByIdAndUpdate(userId,{userName,email,rate},{
         runValidators : true,
         new : true 
     })
-    res.status(200).josn({
+    res.status(200).json({
         message : "Profile updated successfully",
         data : updatedData
     })

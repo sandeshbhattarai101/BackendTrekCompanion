@@ -31,11 +31,16 @@ const isAuthenticated = async (req, res, next)=>{
     // ALTERNATIVE
     try {
         const decoded = await promisify(jwt.verify)(token, process.env.SECRET_KEY)
-       console.log(decoded)
         //check if decoded.id(userId) exists in user Table
-
+        
         const doesUserExist = await User.findOne({_id : decoded.id})
+<<<<<<< HEAD
         if(doesUserExist){         
+=======
+        if(doesUserExist){
+          
+            
+>>>>>>> 5d2aaf062372e98fe9e7ebf576cfeb81ef0c661e
             req.user = doesUserExist  //yo req.user ko value chai hamle yo middleware jun ma use garexam tesko ma access garnu pauxam next le garda
             next() // middle user jaha use hunxa tespaxi ko function haru ma access garna dinxa
         }else{
