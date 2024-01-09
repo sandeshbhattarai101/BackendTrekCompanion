@@ -18,10 +18,10 @@ exports.getMyProfile = async(req,res)=>{
 
 // update my profile controller 
 exports.updateMyProfile = async(req,res)=>{
-    const {userName,email} = req.body 
+    const {userName,email,rate} = req.body 
     const userId = req.user.id 
     // update profile 
-  const updatedData =   await User.findByIdAndUpdate(userId,{userName,email},{
+  const updatedData =   await User.findByIdAndUpdate(userId,{userName,email,rate},{
         runValidators : true,
         new : true 
     })
@@ -82,7 +82,7 @@ exports.updateMyPassword = async(req,res)=>{
 
 
 
-// get all guides
+// search to get all guides
 
 exports.allGuides = async(req, res)=>{
     const keyword = req.query.search ? {
@@ -93,6 +93,6 @@ exports.allGuides = async(req, res)=>{
         ]
     } : {};
 
-    const guides = await Guide.find(keyword);
+    const guides = await User.find(keyword);
     res.send(guides);
 }

@@ -3,8 +3,8 @@ const promisify = require("util").promisify
 const User = require("../model/userModel")
 
 const isAuthenticated = async (req, res, next)=>{
-   const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
-    // const token = req.cookies.token      //browser ma vako token linxa
+   //const token = req.headers.authorization  //postman ma headers field ma key ma Authorization capital vayeni eta sano hunu parxa
+     const token = req.cookies.token      //browser ma vako token linxa
 
 
     if(!token){
@@ -35,9 +35,7 @@ const isAuthenticated = async (req, res, next)=>{
         //check if decoded.id(userId) exists in user Table
 
         const doesUserExist = await User.findOne({_id : decoded.id})
-        if(doesUserExist || doesGuideExist){
-          
-            
+        if(doesUserExist){         
             req.user = doesUserExist  //yo req.user ko value chai hamle yo middleware jun ma use garexam tesko ma access garnu pauxam next le garda
             next() // middle user jaha use hunxa tespaxi ko function haru ma access garna dinxa
         }else{

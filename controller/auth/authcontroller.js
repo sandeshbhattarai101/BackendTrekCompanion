@@ -5,7 +5,7 @@ const sendEmail = require("../../services/sendEmail");
 
 exports.registerUser = async (req, res)=>{
 
-    const {email, username, password,role} = req.body
+    const {email, username, password, rate,role} = req.body
   
     //check if email user already exist or not 
     const userFound= await User.find({
@@ -25,6 +25,7 @@ exports.registerUser = async (req, res)=>{
     email : email,
     username : username,
     password : bcrypt.hashSync(password,8),
+    rate : rate,
     role : role,
   })
   res.status(201).json({

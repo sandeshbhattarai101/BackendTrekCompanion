@@ -23,7 +23,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         enum : ["tourist","guide","admin"]  
     },
-
+    rate:{
+        type : Number,
+        default : null
+    },
     otp : {
         type : Number,
         
