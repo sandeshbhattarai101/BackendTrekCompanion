@@ -33,7 +33,7 @@ exports.getGuides = async(req,res)=>{
     const guide = await Guide.find({_id : id})
 
     const guideReviews = await Review.find({guideId : id}).populate("userId")
-    console.log(guideReviews)
+   // console.log(guideReviews)
     if(guide.length == 0){
       res.status(400).json({
         message : " No guide found  with that id",

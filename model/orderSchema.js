@@ -4,7 +4,6 @@ const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
     user : {type:mongoose.Schema.Types.ObjectId, ref:'User'},
-    guide: {type:mongoose.Schema.Types.ObjectId,ref:"Guide", required:true},
     totalAmount : {type:Number,required:true},
     yourCurrentAddress : {type:String, required:true},
     phoneNumber : {type:Number,required : true},

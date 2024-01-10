@@ -9,7 +9,7 @@ exports.getMyProfile = async(req,res)=>{
     const myProfile = await User.findById(userId)
 
     
-    console.log(myProfile)
+   // console.log(myProfile)
     // send response
     res.status(200).json({
         data : myProfile,
@@ -23,7 +23,7 @@ exports.getMyProfile = async(req,res)=>{
 exports.updateMyProfile = async(req,res)=>{
     const {userName,email,rate} = req.body 
     const userId = req.user.id 
-    console.log(userId)
+   // console.log(userId)
     // update profile 
   const updatedData =   await User.findByIdAndUpdate(userId,{userName,email,rate},{
         runValidators : true,
@@ -89,7 +89,7 @@ exports.updateMyPassword = async(req,res)=>{
 // search to get all guides
 
 exports.allGuides = async(req, res)=>{
-    const keyword = req.query.search ? {
+    const keyword = req.query.search?{
         $or:[
             { username :{ $regex: req.query.search, $options: 'i'}},
             { email :{ $regex: req.query.search, $options: 'i'}},
@@ -97,6 +97,10 @@ exports.allGuides = async(req, res)=>{
         ]
     } : {};
 
-    const guides = await User.find(keyword);
-    res.send(guides);
+    const users = await User.find(keyword).find({_id:{$ne:req.user._id}});
+    return res.status(200).json ({
+        message : "users found",
+        data: users
+    })
+   
 }

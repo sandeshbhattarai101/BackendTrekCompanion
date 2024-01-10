@@ -8,7 +8,7 @@ const router = require("express").Router( )
 
 // router.route("/reviews")
 router.route("/reviews").get(isAuthenticated,catchAsync(getMyReviews))
-router.route("/reviews/:id").delete(isAuthenticated,catchAsync( deleteReview)).post(isAuthenticated,restrictTo("tourist"),catchAsync(createReview))
+router.route("/reviews/:id").delete(isAuthenticated,catchAsync(deleteReview)).post(isAuthenticated,restrictTo("tourist"),catchAsync(createReview))
 
 
 module.exports = router

@@ -66,7 +66,7 @@ exports.registerUser = async (req, res)=>{
   })
   
   res.cookie('token', token,{
-    httpOnly : true,
+    httpOnly : false,
   }); // browser ma application tab vitra cookie vanney ma save hunchha
   
     res.status(200).json({
