@@ -83,7 +83,6 @@ exports.registerUser = async (req, res)=>{
 
 
   exports.logOut = async(req, res)=>{
-    token = req.token
     res.clearCookie("token");
     res.status(200).json({
       message:"User logged out successfully"
