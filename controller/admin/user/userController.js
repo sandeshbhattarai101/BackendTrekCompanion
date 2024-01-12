@@ -1,8 +1,7 @@
 const User = require("../../../model/userModel")
 
-exports.getUsers = async(req, res)=>{
-    const userId = req.user.id
-    const users = await User.find({_id : {$ne : userId}})  //$ne = not equal
+exports.getGuides = async(req, res)=>{
+    const users = await User.find({role : {$eq : "guide"}}) //$eq= equal t0 //$ne = not equal
 if (users.length > 1){
     res.status(200).json({
         message : "User fetched successfully",

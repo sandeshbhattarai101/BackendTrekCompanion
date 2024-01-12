@@ -8,7 +8,7 @@ const router = require("express").Router()
 
 router.route("/register").post(catchAsync(registerUser))
 router.route("/login").post(catchAsync(loginUser))
-router.route("/logout").get(isAuthenticated, catchAsync(logOut))
+router.route("/logout").get( catchAsync(logOut))
 router.route("/forgotPassword").post(catchAsync(forgotPassword))
 router.route("/verifyOtp").post(catchAsync(verifyOtp))
 router.route("/resetPassword").post(catchAsync(resetPassword))
