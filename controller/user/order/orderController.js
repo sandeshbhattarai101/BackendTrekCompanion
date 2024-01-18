@@ -5,7 +5,7 @@ const User = require("../../../model/userModel")
 
 exports.createOrder = async(req,res)=>{
  const userId = req.user.id
-    const {yourCurrentAddress,guide,totalAmount,paymentDetails,phoneNumber} = req.body 
+    const {yourCurrentAddress,guideId,totalAmount,paymentDetails,phoneNumber} = req.body 
     if(!yourCurrentAddress|| !totalAmount || !paymentDetails || !phoneNumber){
         return res.status(400).json({
             message : "Please provide yourCurrentAddress,totalAmount,paymentDetails,phoneNumber"

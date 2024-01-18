@@ -15,32 +15,54 @@ if (users.length > 1){
 }
 }
 
+exports.getGuide = async(req, res)=>{
+    const guideId = req.params.id
+    if(!guideId){
+                return res.status(400).json({
+                    message : "Please provide userId"
+                })
+            }
+        
+    const guide = await User.findById(guideId) 
+    if(!guide){
+        res.status(404).json({
+            message : " Guide not found with that userid",
+            data : []
+        })
+      }else{
+    res.status(200).json({
+        message : "Guide found",
+        data : guide
+    })
+}
+}
+
 
 // delete User Api
 
-exports.deleteUser = async(req, res)=>{
-    const userId = req.params.id
-    if(!userId){
-        return res.status(400).json({
-            message : "Please provide userId"
-        })
-    }
+// exports.deleteUser = async(req, res)=>{
+//     const userId = req.params.id
+//     if(!userId){
+//         return res.status(400).json({
+//             message : "Please provide userId"
+//         })
+//     }
 
-    //check if that userId usrs exists or not
-    const user = await User.findById(userId)
-    if(!user){
-        res.status(404).json({
-            message : " USer not found with that userid"
-        })
+//     //check if that userId usrs exists or not
+//     const user = await User.findById(userId)
+//     if(!user){
+//         res.status(404).json({
+//             message : " USer not found with that userid"
+//         })
 
-    }else{
-        await User.findByIdAndDelete(userId)
-        res.status(200).json({
-            message : 'User deleted successfully'
+//     }else{
+//         await User.findByIdAndDelete(userId)
+//         res.status(200).json({
+//             message : 'User deleted successfully'
 
-        })
-    }
+//         })
+//     }
 
 
 
-}
+// }

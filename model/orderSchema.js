@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
     user : {type:mongoose.Schema.Types.ObjectId, ref:'User'},
+    guide : {type:mongoose.Schema.Types.ObjectId, ref:'User'},
     totalAmount : {type:Number,required:true},
     yourCurrentAddress : {type:String, required:true},
     phoneNumber : {type:Number,required : true},
@@ -14,7 +15,7 @@ const orderSchema = new Schema({
     },
     paymentDetails : {
         pidx : {type:String},
-        method:{type:String,enum:['COD','khalti']},
+        method:{type:String,enum:['COD','khalti'],default : 'Khalti'},
         status : {type : String,enum:['paid','unpaid','pending'],default : 'pending'}
     }
 },{

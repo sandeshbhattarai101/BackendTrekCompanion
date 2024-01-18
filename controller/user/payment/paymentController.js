@@ -28,7 +28,7 @@ exports.initialKhaltiPayment = async(req, res)=>{
         }
 
     })
-console.log(response)
+// console.log(response)
 const order = await Order.findById(orderId)
 order.paymentDetails.pidx = response.data.pidx
 await order.save()
