@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const { fetchChats, getChat, accessChat } = require("../controller/chat/chatController")
+const { fetchChats, accessChat } = require("../controller/chat/chatController")
 const isAuthenticated = require("../middleware/isAuthenticated")
 const catchAsync = require("../services/catchAsync")
 

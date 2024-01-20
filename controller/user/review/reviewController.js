@@ -4,12 +4,13 @@ const User = require("../../../model/userModel")
 
  exports.createReview = async(req,res)=>{
      const userId = req.user.id
-     const {rating,message} = req.body 
+     const {rating} = req.body 
+     console.log(rating)
      const guideId = req.params.id 
-     //console.log(req.body, guideId)
-     if(!rating || !message || !guideId) {
+     console.log(req.body, guideId)
+     if(!rating || !guideId) {
          return res.status(400).json({
-             message : "Please provide rating, message, guideId"
+             message : "Please provide rating, guideId"
          })
      }
      // check if that productId product exists or not
@@ -23,8 +24,7 @@ const User = require("../../../model/userModel")
      await Review.create({
          userId ,
          guideId ,
-         rating ,
-         message 
+         rating 
      })
      res.status(200).json({
          message : "Review added successfully"

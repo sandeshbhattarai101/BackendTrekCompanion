@@ -9,19 +9,12 @@ const reviewSchema = new Schema({
     required : [true,"A review must belong to user"] 
  },
  guideId : {
-    type : Schema.Types.ObjectId,
-    ref : "Guide", //guide table sanga reference garnu paryo //model(Table) ko name rakhnu paryo
-    required : [true,"A review must be of guide"]
-
+   type : String,
+   required : true,
  },
  rating : {
     type : Number,
     required : true,
-    default : 3
- },
- message : {
-    type : String,
-    required : true
  }
 
 })

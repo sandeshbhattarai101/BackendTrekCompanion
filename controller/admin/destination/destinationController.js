@@ -54,6 +54,27 @@ if (destinations.length == 0){
     })
 }
 
+// Search Destinations for tourist Dashboard
+
+exports.allDestinations = async(req, res)=>{
+    const keyword = req.query.search?{
+     destinationName :{ $regex: req.query.search, $options: 'i'}
+        
+    } : {};
+
+    const destinations = await Destination.find(keyword);
+    return res.status(200).json ({
+        message : "destinations found",
+        data: destinations
+    })
+   
+}
+
+
+
+
+
+
 
 }
 

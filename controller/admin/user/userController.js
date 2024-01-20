@@ -1,7 +1,8 @@
+const Review = require("../../../model/reviewModel")
 const User = require("../../../model/userModel")
 
 exports.getGuides = async(req, res)=>{
-    const users = await User.find({role : {$eq : "guide"}}) //$eq= equal t0 //$ne = not equal
+    const users = await User.find({role : {$eq : "guide"}})//$eq= equal t0 //$ne = not equal
 if (users.length > 1){
     res.status(200).json({
         message : "User fetched successfully",
@@ -23,7 +24,9 @@ exports.getGuide = async(req, res)=>{
                 })
             }
         
-    const guide = await User.findById(guideId) 
+   const guide = await User.findById(guideId)
+   const review = await Review.find({ guideId });
+
     if(!guide){
         res.status(404).json({
             message : " Guide not found with that userid",
@@ -32,7 +35,7 @@ exports.getGuide = async(req, res)=>{
       }else{
     res.status(200).json({
         message : "Guide found",
-        data : guide
+        data : {guide, review}
     })
 }
 }
