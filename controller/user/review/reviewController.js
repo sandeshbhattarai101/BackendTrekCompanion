@@ -5,7 +5,7 @@ const User = require("../../../model/userModel")
  exports.createReview = async(req,res)=>{
      const userId = req.user.id
      const {rating} = req.body 
-     console.log(rating)
+    // console.log(rating)
      const guideId = req.params.id 
      console.log(req.body, guideId)
      if(!rating || !guideId) {

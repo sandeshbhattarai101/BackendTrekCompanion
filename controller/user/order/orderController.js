@@ -5,7 +5,8 @@ const User = require("../../../model/userModel")
 
 exports.createOrder = async(req,res)=>{
  const userId = req.user.id
-    const {yourCurrentAddress,guideId,totalAmount,paymentDetails,phoneNumber} = req.body 
+ const guideId = req.params.id
+    const {yourCurrentAddress,totalAmount,paymentDetails,phoneNumber} = req.body 
     if(!yourCurrentAddress|| !totalAmount || !paymentDetails || !phoneNumber){
         return res.status(400).json({
             message : "Please provide yourCurrentAddress,totalAmount,paymentDetails,phoneNumber"
@@ -14,7 +15,7 @@ exports.createOrder = async(req,res)=>{
     // insert into orders 
    const createdOrder =  await Order.create({
         user : userId,
-        guide,
+        guide : guideId,
         yourCurrentAddress,
         totalAmount,
         paymentDetails,
