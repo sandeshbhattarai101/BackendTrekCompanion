@@ -82,7 +82,7 @@ app.use("",userReviewRoute)
 
 // app.get('/recommend', async (req, res) => {
 //   const variableValue = req.query.destination;
-//   console.log(variableValue)
+//   //console.log(variableValue)
 
 //   const jupyterExecutable = 'C:\\Users\\Sandesh\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\jupyter.exe';
 
@@ -108,8 +108,6 @@ app.use("",userReviewRoute)
 // });
 
 //     });
-
-
 
 
 // app.get('/recommend', (req, res) => {
@@ -181,9 +179,6 @@ app.use("",userReviewRoute)
 //     }
 //   });
 // });
-
-
-
 
 
 

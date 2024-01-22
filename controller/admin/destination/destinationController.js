@@ -53,6 +53,7 @@ if (destinations.length == 0){
         data : destinations
     })
 }
+}
 
 // Search Destinations for tourist Dashboard
 
@@ -63,6 +64,7 @@ exports.allDestinations = async(req, res)=>{
     } : {};
 
     const destinations = await Destination.find(keyword);
+   // console.log(destinations)
     return res.status(200).json ({
         message : "destinations found",
         data: destinations
@@ -71,12 +73,6 @@ exports.allDestinations = async(req, res)=>{
 }
 
 
-
-
-
-
-
-}
 
 
 exports.getDestination = async(req, res)=>{
@@ -135,6 +131,8 @@ exports.deleteDestination = async(req,res)=>{
         message : "Destination deleted successfully"
     })
 }
+
+
 exports.editDestination = async(req,res)=>{
     const {id} = req.params
     const {destinationName, destinationDescription, destinationCost, completionTime, tripGrade, maxAltitude, destinationStatus } = req.body
