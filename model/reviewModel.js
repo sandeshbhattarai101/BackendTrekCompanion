@@ -9,7 +9,8 @@ const reviewSchema = new Schema({
     required : [true,"A review must belong to user"] 
  },
  guideId : {
-   type : String,
+   type : Schema.Types.ObjectId,
+   ref : "User",
    required : true,
  },
  rating : {

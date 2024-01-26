@@ -4,9 +4,14 @@ const User = require("../../../model/userModel")
 exports.getGuides = async(req, res)=>{
     const users = await User.find({role : {$eq : "guide"}})//$eq= equal t0 //$ne = not equal
 if (users.length > 1){
+
+    const reviews = await getReviewForGuide(users);
+
+  //  console.log(reviews)
+
     res.status(200).json({
         message : "User fetched successfully",
-        data : users
+        data : reviews
     })
 }else{
     res.status(404).json({
@@ -14,7 +19,44 @@ if (users.length > 1){
         data : []
     })
 }
+
 }
+// for review of each guide
+const getReviewForGuide = async (users) => {
+    const getData = await Promise.all(
+      users.map(async (user) => {
+       let value =  await Review.find({ guideId: user._id })
+       let rating = 0;
+
+       value.forEach((review)=>{
+        rating += review.rating
+       })
+
+       rating = (rating/value.length).toFixed(1)
+       let ratingObj = {
+         rating: rating,
+        _id : user._id,
+         username : user.username,
+         email : user.email,
+         rate : user.rate
+    }
+        return ratingObj;
+        })
+        
+        );
+
+        // Changing rating = NaN into 0 
+      const reviewData =  getData.map((review)=>{
+          if(review.rating == "NaN"){
+              return {...review, rating: "0"}
+          }else{
+            return review
+          }
+      }).sort((a, b) => b.rating - a.rating)
+
+       return reviewData;
+};
+
 
 exports.getGuide = async(req, res)=>{
     const guideId = req.params.id
