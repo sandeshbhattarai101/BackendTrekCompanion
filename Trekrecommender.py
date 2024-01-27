@@ -132,19 +132,77 @@ sorted(list(enumerate(similarity[0])),reverse=True,key=lambda x:x[1])[1:6]
 # In[25]:
 
 
+# import sys
+
+# def recommend(destination):
+#     destination_index = new_df[new_df['Trek'] == destination].index[0]
+#     distances = similarity[destination_index]
+#     destinations_list = sorted(list(enumerate(distances)),reverse=True,key=lambda x:x[1])[1:6]
+    
+#     for i in destinations_list:
+#      print(new_df.iloc[i[0]].Trek)
+
+
+# # In[26]:
+
+
+# if __name__ == "__main__":
+#     if len(sys.argv) != 2:
+#         print("Usage: python trekrecommender.py <destination>")
+#         sys.exit(1)
+
+#     destination = sys.argv[1]
+#     recommend(destination)
+
+# import sys
+
+# def recommend(destination):
+#     # Check if the destination exists in the DataFrame
+#     if destination not in new_df['Trek'].values:
+#         print(f"Destination '{destination}' not found.")
+#         return
+    
+#     destination_index = new_df[new_df['Trek'] == destination].index[0]
+#     distances = similarity[destination_index]
+#     destinations_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
+    
+#     for i in destinations_list:
+#         print(new_df.iloc[i[0]].Trek)
+
+        
+
+# if __name__ == "__main__":
+#     if len(sys.argv) != 2:
+#         print("Usage: python trekrecommender.py <destination>")
+#         sys.exit(1)
+
+#     destination = sys.argv[1]
+#     recommend(destination)
+
+
 import sys
+import json
 
 def recommend(destination):
-    destination_index = new_df[new_df['Trek'] == destination].index[0]
-    distances = similarity[destination_index]
-    destinations_list = sorted(list(enumerate(distances)),reverse=True,key=lambda x:x[1])[1:6]
-    
-    for i in destinations_list:
-     print(new_df.iloc[i[0]].Trek)
+    result = {"result": None, "error": None}
 
+    try:
+        # Check if the destination exists in the DataFrame
+        if destination not in new_df['Trek'].values:
+            result["error"] = f"Destination '{destination}' not found."
+            return result
 
-# In[26]:
+        destination_index = new_df[new_df['Trek'] == destination].index[0]
+        distances = similarity[destination_index]
+        destinations_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
 
+        recommended_destinations = [new_df.iloc[i[0]].Trek for i in destinations_list]
+        result["result"] = recommended_destinations
+
+    except Exception as e:
+        result["error"] = str(e)
+
+    return result
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -152,5 +210,10 @@ if __name__ == "__main__":
         sys.exit(1)
 
     destination = sys.argv[1]
-    recommend(destination)
+    recommendation_result = recommend(destination)
+
+    # Print the JSON-formatted result to stdout
+    print(json.dumps(recommendation_result))
+
+
 
