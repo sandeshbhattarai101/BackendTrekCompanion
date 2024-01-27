@@ -1,11 +1,7 @@
 const express = require("express")
 const app = express();
-// const {PythonShell} = require("python-shell")
 
-
-//const { exec } = require('child_process');
-//const { promisify } = require('util');
- //const { spawn } = require('child_process');
+ const { spawn } = require('child_process');
 
 // TELL NODE TO USE DOTENV
 require("dotenv").config()
@@ -79,6 +75,65 @@ app.use("",paymentRoute)
 app.use("",adminUsersRoute)
 app.use("",userProfileRoute)
 app.use("",userReviewRoute)
+
+
+
+// Recommendation part
+
+
+app.get('/recommend', async (req, res) => {
+  // Extract variable value from the query parameters
+  const variableValue = req.query.destination;
+  
+
+  // Replace 'python' with the correct command to invoke the Python interpreter on your system
+  const pythonExecutable = 'C:\\Users\\ACER\\anaconda3\\python.exe';
+
+  // Replace 'path/to/your_script.py' with the actual path to your Python script
+  const pythonScript = 'C:\\Users\\ACER\\Desktop\\BackendTrekCompanion\\Trekrecommender.py';
+
+  // Spawn a Python process, passing the variable value as a command-line argument
+  const pythonProcess = spawn(pythonExecutable, [pythonScript, variableValue]);
+
+  // Variables to capture output from the Python script
+  let pythonScriptOutput = '';
+  let pythonScriptError = '';
+
+  // Handle Python process events
+  pythonProcess.stdout.on('data', (data) => {
+    pythonScriptOutput += data;
+  });
+
+  pythonProcess.stderr.on('data', (data) => {
+    pythonScriptError += data;
+  });
+
+  pythonProcess.on('close', (code) => {
+    if (code === 0) {
+      // Successful execution
+      try {
+        // Parse the JSON-formatted result from the Python script
+        const resultObject = JSON.parse(pythonScriptOutput);
+
+        // Access the result in your Node.js code
+        const processedValue = resultObject.result;
+        // console.log(processedValue);
+        // console.log(resultObject)
+
+        // Send the processed value as a response
+        res.send(`Processed value in Node.js: ${processedValue}`);
+      } catch (error) {
+        console.error('Error parsing JSON result:', error);
+        res.status(500).send('Internal Server Error');
+      }
+    } else {
+      // Python script exited with an error
+      console.error(`Error from Python script: ${pythonScriptError}`);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+});
+
 
 
 const PORT = process.env.PORT
