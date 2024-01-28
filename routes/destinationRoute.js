@@ -1,4 +1,4 @@
-const { createDestination, getDestinations, getDestination, deleteDestination, editDestination, allDestinations} = require("../controller/admin/destination/destinationController")
+const { createDestination, getDestinations, getDestination, deleteDestination, editDestination, allDestinations, recommendDestination} = require("../controller/admin/destination/destinationController")
 
 const {multer, storage} =require("../middleware/multerConfig")
 const upload = multer({storage : storage})
@@ -12,6 +12,7 @@ router.route("/destinations").get( catchAsync(getDestinations)).post(isAuthentic
 router.route("/destinations/:id").get(isAuthenticated, catchAsync(getDestination)).delete(catchAsync(deleteDestination)).patch(isAuthenticated,restrictTo("admin"), upload.single("destinationImage"),catchAsync(editDestination) )
 
 router.route("/tourist/destination").get(isAuthenticated, catchAsync(allDestinations) )
+router.route("/recommend/destination").get(isAuthenticated, catchAsync(recommendDestination) )
 
 
 module.exports = router

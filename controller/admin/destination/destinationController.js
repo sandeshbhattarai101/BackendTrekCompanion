@@ -97,6 +97,29 @@ if(destination.length == 0){
 
 }
 
+//for recommended destination
+exports.recommendDestination = async(req, res)=>{
+       const name = req.query.search
+    //    console.log(name)
+        const keyword = req.query.search?{
+         destinationName :{ $regex: req.query.search, $options: 'i'}
+            
+        } : {};
+    
+        const destinations = await Destination.find(keyword);
+    //    console.log(destinations)
+        return res.status(200).json ({
+            message : "destinations found",
+            data: destinations
+        })
+       
+    }
+
+
+
+
+
+
 exports.deleteDestination = async(req,res)=>{
     const {id} = req.params
     if(!id){
