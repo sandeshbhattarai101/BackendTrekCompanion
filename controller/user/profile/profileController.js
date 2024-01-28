@@ -82,8 +82,16 @@ exports.updateMyPassword = async(req,res)=>{
     })
 }
 
-
-
+//get all tourist with their id for notifications in guideDashboard
+exports.allTourists = async(req, res)=>{
+    const {userId} = req.body
+    const users = await User.find({_id : userId});
+    return res.status(200).json ({
+        message : "users found",
+        data: users
+    })
+   
+}
 
 
 // search to get all guides

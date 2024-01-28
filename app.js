@@ -28,7 +28,8 @@ const paymentRoute = require("./routes/paymentRoute")
 const orderRoute = require("./routes/orderRoute")
 const adminUsersRoute = require("./routes/adminUsersRoute")
 const userProfileRoute = require("./routes/userProfileRoute")
-const userReviewRoute = require("./routes/userReviewRoute")
+const userReviewRoute = require("./routes/userReviewRoute");
+const Destination = require("./model/destinationModel");
 
 
 // ROUTES END HERE
@@ -108,7 +109,7 @@ app.get('/recommend', async (req, res) => {
     pythonScriptError += data;
   });
 
-  pythonProcess.on('close', (code) => {
+  pythonProcess.on('close', async (code) => {
     if (code === 0) {
       // Successful execution
       try {
@@ -117,11 +118,16 @@ app.get('/recommend', async (req, res) => {
 
         // Access the result in your Node.js code
         const processedValue = resultObject.result;
-        // console.log(processedValue);
-        // console.log(resultObject)
+
+        const recommendations = await recommendedDestination(processedValue)
 
         // Send the processed value as a response
-        res.send(`Processed value in Node.js: ${processedValue}`);
+      //  res.send(`Processed value in Node.js: ${processedValue}`);
+
+    //   res.status(200).json({
+    //     message : " Recommendations fetched successfully",
+    //     data : recommendations
+    // })
       } catch (error) {
         console.error('Error parsing JSON result:', error);
         res.status(500).send('Internal Server Error');
@@ -133,6 +139,24 @@ app.get('/recommend', async (req, res) => {
     }
   });
 });
+
+
+
+//for recommended destinations
+
+// const recommendedDestination= async(destinations)=>{
+//   const getData = await Promise.all(
+//     destinations.map(async (destination) => {
+      
+//   const keyword = destination?{
+//     destinationName :{ $regex: destination , $options: 'i'}   
+//    } : {};
+//    const resultObj = await Destination.find(keyword);  
+//    return resultObj;
+//       })
+//       );
+// }
+
 
 
 

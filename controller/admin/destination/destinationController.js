@@ -73,8 +73,6 @@ exports.allDestinations = async(req, res)=>{
 }
 
 
-
-
 exports.getDestination = async(req, res)=>{
     const {id} = req.params
     if (!id){

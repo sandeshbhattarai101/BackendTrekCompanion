@@ -29,24 +29,20 @@ await user.save()
     })
 
 }
-// exports.getMyOrders = async(req,res)=>{
-//     const userId = req.user.id
-//     const orders = await Order.find({user : userId}).populate({
-//         path:"items.product",
-//         model : "Product",
-//         select : "-productStockQty -createdAt -updatedAt -reviews -__v"
-//     })
-//     if(orders.length == 0 ){
-//         return res.status(404).json({
-//             message : "No orders",
-//             data : []
-//         })
-//     }
-//     res.status(200).json({
-//         message : "Orders Fetched Successfully",
-//         data : orders
-//     })
-// }
+exports.getMyOrders = async(req,res)=>{
+    const userId = req.user.id
+    const orders = await Order.find({guide : userId})
+    if(orders.length == 0 ){
+        return res.status(404).json({
+            message : "No orders",
+            data : []
+        })
+    }
+    res.status(200).json({
+        message : "Orders Fetched Successfully",
+        data : orders
+    })
+}
 
 // exports.updateMyOrder = async(req,res)=>{
 //     const userId = req.user.id 
